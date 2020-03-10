@@ -9,21 +9,23 @@ SPARQL query builder for Common Lisp.
 ```
 
 ```lisp
- (sparql (:select *
-    :where (?x ?y ?z)
-    :limit 20
-    :offset 10))
+ (sparql 
+    (:select *
+        :where (?x ?y ?z)
+        :limit 20
+        :offset 10))
 ```
 
 ### Subqueries
 
 ```lisp
-(sparql (:select *
-    :where (?x ?y ?z)
-        (:select *
-            :where (?x ?y ?z)
-            :limit 20
-            :offset 10)
+(sparql 
+    (:select *
+        :where (?x ?y ?z)
+            (:select *
+                :where (?x ?y ?z)
+                :limit 20
+                :offset 10)
         :limit 20
         :offset 10))
 ``` 
@@ -58,7 +60,7 @@ Those are already defined.
 
 ## Implementation technique
 
-I think the embedded domain specific language technique used is interesting. `parser-combinators` library is used, but, instead of using for parsing strings, it is used for parsing already parsed Lisp lists.
+I think the embedded domain specific language technique used is interesting. `parser-combinators` library is used, but, instead of using for parsing strings, it is used for parsing already read Lisp lists.
 
 ## License
 
