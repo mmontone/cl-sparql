@@ -10,22 +10,22 @@ SPARQL query builder for Common Lisp.
 
 ```lisp
  (sparql (:select *
-			:where (?x ?y ?z)
-			:limit 20
-			:offset 10))
+    :where (?x ?y ?z)
+    :limit 20
+    :offset 10))
 ```
 
 ### Subqueries
 
 ```lisp
 (sparql (:select *
-                        :where (?x ?y ?z)
-                        (:select *
-                                 :where (?x ?y ?z)
-                                 :limit 20
-                                 :offset 10)
-                        :limit 20
-                        :offset 10))
+    :where (?x ?y ?z)
+        (:select *
+            :where (?x ?y ?z)
+            :limit 20
+            :offset 10)
+        :limit 20
+        :offset 10))
 ``` 
 
 ## URI syntax
