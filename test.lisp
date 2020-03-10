@@ -32,17 +32,17 @@
        for char = (read-char stream nil nil)
        while char
        when (not (equalp char #\ ))
-     do (push char new-string)
-     finally (return (coerce (nreverse new-string) 'string)))))
-       
+       do (push char new-string)
+       finally (return (coerce (nreverse new-string) 'string)))))
+
 (defun sparql-str-equalp (str1 str2)
   (string-equal (remove-spaces str1)
-		(remove-spaces str2)))
+                (remove-spaces str2)))
 
 (test sparql-syntax-test
 
   ;; Basic tests
-  
+
   (is (sparql-str-equalp
        (sparql (:select * :where (?x ?y ?z)))
        "SELECT * WHERE { ?X ?Y ?Z}"))
@@ -53,51 +53,51 @@
   ;; Literals
   (is (sparql-str-equalp
        (sparql (:select * :where (?x ?y ?z)
-			(?x #<rdf:type> "MyType")))
-      "SELECT * WHERE { ?X ?Y ?Z . ?X <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> \"MyType\"}"))
+                        (?x #<rdf:type> "MyType")))
+       "SELECT * WHERE { ?X ?Y ?Z . ?X <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> \"MyType\"}"))
 
   ;; Select options
   (is (sparql-str-equalp
        (sparql (:select *
-			:where (?x ?y ?z)
-			:order-by ?z))
+                        :where (?x ?y ?z)
+                        :order-by ?z))
        "SELECT * WHERE { ?X ?Y ?Z} ORDER BY ASC(?Z)"))
 
   (is (sparql-str-equalp
        (sparql (:select *
-			:where (?x ?y ?z)
-			:limit 20
-			:offset 10))
+                        :where (?x ?y ?z)
+                        :limit 20
+                        :offset 10))
        "SELECT * WHERE { ?X ?Y ?Z} LIMIT 20 OFFSET 10"))
 
   ;; Subqueries
   (is (sparql-str-equalp
        (sparql (:select *
-			:where (?x ?y ?z)
-			(:select *
-				 :where (?x ?y ?z)
-				 :limit 20
-				 :offset 10)
-			:limit 20
-			:offset 10))
+                        :where (?x ?y ?z)
+                        (:select *
+                                 :where (?x ?y ?z)
+                                 :limit 20
+                                 :offset 10)
+                        :limit 20
+                        :offset 10))
        "SELECT * WHERE { ?X ?Y ?Z . { SELECT * WHERE { ?X ?Y ?Z} LIMIT 20 OFFSET 10 } } LIMIT 20 OFFSET 10"))
-  
+
   ;; Variable capture
-  
+
   (is (sparql-str-equalp
        (let ((value nil))
-	 (sparql (:select * :where (?x ?y value))))
+         (sparql (:select * :where (?x ?y value))))
        "SELECT * WHERE { ?X ?Y \"false\"^^<http://www.w3.org/2001/XMLSchema#boolean>}"))
   (is (sparql-str-equalp
        (let ((value "hello"))
-	 (sparql (:select * :where (?x ?y value))))
+         (sparql (:select * :where (?x ?y value))))
        "SELECT * WHERE { ?X ?Y \"hello\"}"))
 
   ;; SPARQL evaluation
   (is (sparql-str-equalp
        (let ((order-by (list :order-by '?timestamp))
-	     (value "Foo"))
-	 (sparql-eval `(:select * :where
-				(?x #<rdfs:label> ,value)
-				,@order-by)))
+             (value "Foo"))
+         (sparql-eval `(:select * :where
+                                (?x #<rdfs:label> ,value)
+                                ,@order-by)))
        "SELECT * WHERE { ?X <http://www.w3.org/2000/01/rdf-schema#label> \"Foo\"} ORDER BY ASC(?TIMESTAMP)")))
