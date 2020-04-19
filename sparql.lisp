@@ -463,6 +463,6 @@
 ;; Example:
 ;; (sparql
 ;;  (:select ?z ?y
-;;    :where (:graph #<rdf:type> (:union ((?x ?y ?z))
+;;    :where (:graph #u<rdf:type> (:union ((?x ?y ?z))
 ;;                       ((?w ?z ?x))) (?x ?w ?w))
 ;;    :order-by 22))

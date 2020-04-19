@@ -36,7 +36,7 @@ Enable special URI syntax with `(sparql:enable-uri-syntax)`.
 
 After that, you can write uris like:
 
-`#<rdf:type>`
+`#u<rdf:type>`
 
 and you get the expanded uri:
 

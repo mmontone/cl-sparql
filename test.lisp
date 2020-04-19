@@ -53,7 +53,7 @@
   ;; Literals
   (is (sparql-str-equalp
        (sparql (:select * :where (?x ?y ?z)
-                        (?x #<rdf:type> "MyType")))
+                        (?x #u<rdf:type> "MyType")))
        "SELECT * WHERE { ?X ?Y ?Z . ?X <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> \"MyType\"}"))
 
   ;; Select options
@@ -98,6 +98,6 @@
        (let ((order-by (list :order-by '?timestamp))
              (value "Foo"))
          (sparql-eval `(:select * :where
-                                (?x #<rdfs:label> ,value)
+                                (?x #u<rdfs:label> ,value)
                                 ,@order-by)))
        "SELECT * WHERE { ?X <http://www.w3.org/2000/01/rdf-schema#label> \"Foo\"} ORDER BY ASC(?TIMESTAMP)")))

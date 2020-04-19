@@ -116,6 +116,8 @@
 
 (defun uri-reader (stream sub-char numarg)
   (declare (ignore sub-char numarg))
+  (assert (eql (read-char stream) #\<)
+          nil "Error parsing URI. URIs should begin with '<'.")
   (let ((chars
 	 (loop for char = (read-char stream)
 	    while (not (equalp char #\>))
@@ -124,8 +126,8 @@
 
 (defun enable-uri-syntax ()
   (set-dispatch-macro-character
-   #\# #\< #'uri-reader))
+   #\# #\u 'uri-reader))
 
 ;; Example
-;; #<http://www.google.com>
-;; #<rdf:type>
+;; #u<http://www.google.com>
+;; #u<rdf:type>
