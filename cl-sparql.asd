@@ -7,4 +7,5 @@
   :depends-on (:puri :parser-combinators :cl-ppcre :split-sequence)
   :components ((:file "package")
                (:file "sparql")
-               (:file "uri")))
+               (:file "uri"))
+  :in-order-to ((asdf:test-op (asdf:test-op :cl-sparql-tests))))
