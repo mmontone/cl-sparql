@@ -57,6 +57,16 @@ Use `define-uri-prefix` to define new uri prefixes expansions, like:
 
 Those are already defined.
 
+### URI syntax in queries
+
+```lisp
+(sparql
+    (:select ?x ?v ?z
+        :where (?x #u<rdf:type> #u<owl:Ontology>)
+               (?y ?v ?w)
+               (:optional (?x ?y ?z))
+        :limit 20))
+```
 
 ## Implementation technique
 
