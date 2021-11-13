@@ -45,6 +45,8 @@
                          (setf closure-value nil)))))
                (constantly nil)))))))
 
+(defvar *variable-name-reader* #'symbol-name)
+
 (def-cached-parser sparql-var
   "Parser: parse a SPARQL variable."
   #'(lambda (inp)
@@ -55,7 +57,7 @@
            (if (not (symbolp symbol))
                (constantly nil)
                                         ; else
-               (let ((var (symbol-name symbol)))
+               (let ((var (funcall *variable-name-reader* symbol)))
                  (let ((prefix (char var 0)))
                    (if (not (or (equalp prefix #\?)
                                 (equalp prefix #\$)))
